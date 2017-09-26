@@ -1,0 +1,66 @@
+body {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 1rem;
+  font-color: black;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 5px;
+}
+
+.board {
+  background-color: #f0f0f0;
+  padding: 5px;
+}
+
+.card {
+  background: white;
+  margin: 5px;
+  box-shadow: 1px 2px 3px #4a4a4a;
+}
+
+.card p {
+  margin: 1rem;
+  text-align: left;
+}
+
+.heading {
+  border-radius: 5px;
+  font-family: "Fjalla One", sans-serif;
+  letter-spacing: 0.0525em;
+  font-weight: bolder;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.backlog {
+  background: pink;
+}
+
+.todo {
+  background: yellow;
+}
+
+.in-progress {
+  background: lightblue;
+}
+
+.ready-for-review {
+  background: indianred;
+}
+
+.in-qa {
+  background: tan;
+}
+
+.done {
+  background: teal;
+}
+
+.category {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+}
