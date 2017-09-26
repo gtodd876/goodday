@@ -4,16 +4,15 @@ let instance = axios.create({
   timeout: 1000,
   headers: { "X-TrackerToken": "849f56353d70242c0a95548fc4b022cd" }
 });
-let allStories = [];
 
 instance
   .get()
   .then(function(response) {
+    let allStories = response.data;
     let todoStories = [];
     let reviewStories = [];
     let inprogressStories = [];
     let doneStories = [];
-    let allStories = response.data;
     organizeStories(
       allStories,
       todoStories,
@@ -21,10 +20,9 @@ instance
       inprogressStories,
       doneStories
     );
-    console.log(todoStories, "todoStories");
-    console.log(inprogressStories, "inprogressStories");
-    console.log(reviewStories, "reviewStories");
-    console.log(doneStories, "doneStories");
+    console.log(todoStories);
+
+    displayStories(todoStories, reviewStories, inprogressStories, doneStories);
   })
   .catch(function(error) {
     console.log(error);
@@ -55,31 +53,44 @@ function organizeStories(
   }
 }
 
-// switch (response.data[i].current_state) {
-//   case "unscheduled":
-//     $(".todo").append(
-//       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-//     );
-//   case "unstarted":
-//     $(".todo").append(
-//       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-//     );
-//     break;
-//   case "started":
-//     $(".in-progress").append(
-//       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-//     );
-//     break;
-//   case "finished":
-//     $(".ready-for-review").append(
-//       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-//     );
-//     break;
-//   case "delivered" || "accepted":
-//     $(".done").append(
-//       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-//     );
-//     break;
-// }
-// console.log(response.data[i].name + "-" + response.data[i].current_state);
-// }
+function displayStories(
+  todoStories,
+  reviewStories,
+  inprogressStories,
+  doneStories
+) {
+  todoStories.forEach(function(story) {
+    $(".todo").append(story.name);
+  });
+  reviewStories.forEach(function(story) {
+    $(".ready-for-review").append(story.name);
+  });
+  inprogressStories.forEach(function(story) {
+    $(".in-progress").append(story.name);
+  });
+  doneStories.forEach(function(story) {
+    $(".done").append(story.name);
+  });
+}
+
+// inprogressStories = allStories.filter(function(story) {
+//   return story.current_state === "started";
+// });
+// console.log(inprogressStories);
+// reviewStories = allStories.filter(function(story) {
+//   return story.current_state === "finished";
+// });
+// console.log(reviewStories);
+// doneStories = allStories.filter(function(story) {
+//   return (
+//     story.current_state === "delivered" || story.current_state === "accepted"
+//   );
+// });
+// console.log(doneStories);
+// todoStories = allStories.filter(function(story) {
+//   return (
+//     story.current_state === "unscheduled" ||
+//     story.current_state === "unstarted"
+//   );
+// });
+// console.log(todoStories);
