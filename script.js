@@ -10,37 +10,37 @@ let allStories = [];
 instance
   .get()
   .then(function(response) {
-    for (let i = 0; i < response.data.length; i++) {
-      allStories.push(response);
-      console.log(allStories);
-      // switch (response.data[i].current_state) {
-      //   case "unscheduled":
-      //     $(".todo").append(
-      //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-      //     );
-      //   case "unstarted":
-      //     $(".todo").append(
-      //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-      //     );
-      //     break;
-      //   case "started":
-      //     $(".in-progress").append(
-      //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-      //     );
-      //     break;
-      //   case "finished":
-      //     $(".ready-for-review").append(
-      //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-      //     );
-      //     break;
-      //   case "delivered" || "accepted":
-      //     $(".done").append(
-      //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
-      //     );
-      //     break;
-      // }
-      console.log(response.data[i].name + "-" + response.data[i].current_state);
-    }
+    allStories.push(response.data);
+    console.log(allStories);
+
+    // switch (response.data[i].current_state) {
+    //   case "unscheduled":
+    //     $(".todo").append(
+    //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
+    //     );
+    //   case "unstarted":
+    //     $(".todo").append(
+    //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
+    //     );
+    //     break;
+    //   case "started":
+    //     $(".in-progress").append(
+    //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
+    //     );
+    //     break;
+    //   case "finished":
+    //     $(".ready-for-review").append(
+    //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
+    //     );
+    //     break;
+    //   case "delivered" || "accepted":
+    //     $(".done").append(
+    //       "<div class='card'> <p>" + response.data[i].name + "</p> </div>"
+    //     );
+    //     break;
+    // }
+    // console.log(response.data[i].name + "-" + response.data[i].current_state);
+    // }
   })
   .catch(function(error) {
     console.log(error);
