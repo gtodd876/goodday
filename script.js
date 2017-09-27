@@ -88,64 +88,25 @@ function displayStories(
   doneStories
 ) {
   todoStories.forEach(function(story) {
-    let storyType = story.story_type;
-    let email = getEmailAddress(story.owned_by_id);
-    let urlForGravatar = gravatar(email, 44);
-    $(".todo").append(
-      "<div class='card'>" +
-        "<img src='" +
-        urlForGravatar +
-        "'>" +
-        "<p>" +
-        story.name +
-        "</p></div>"
-    );
-    // addStoryType(storyType);
+    let board = "todo";
+    console.log(story.url);
+    let storyUrl = story.url;
+    appendStory(story, board, storyUrl);
   });
   reviewStories.forEach(function(story) {
-    let storyType = story.story_type;
-    let email = getEmailAddress(story.owned_by_id);
-    let urlForGravatar = gravatar(email, 44);
-    $(".ready-for-review").append(
-      "<div class='card'>" +
-        "<img src='" +
-        urlForGravatar +
-        "'>" +
-        "<p>" +
-        story.name +
-        "</p></div>"
-    );
-    // addStoryType(storyType);
+    let board = "in-progress";
+    let storyUrl = story.url;
+    appendStory(story, board, storyUrl);
   });
   inprogressStories.forEach(function(story) {
-    let storyType = story.story_type;
-    let email = getEmailAddress(story.owned_by_id);
-    let urlForGravatar = gravatar(email, 44);
-    $(".in-progress").append(
-      "<div class='card'>" +
-        "<img src='" +
-        urlForGravatar +
-        "'>" +
-        "<p>" +
-        story.name +
-        "</p></div>"
-    );
-    // addStoryType(storyType);
+    let board = "ready-for-review";
+    let storyUrl = story.url;
+    appendStory(story, board, storyUrl);
   });
   doneStories.forEach(function(story) {
-    let email = getEmailAddress(story.owned_by_id);
-    let urlForGravatar = gravatar(email, 44);
-    let storyType = story.story_type;
-    $(".done").append(
-      "<div class='card'>" +
-        "<img src='" +
-        urlForGravatar +
-        "'>" +
-        "<p>" +
-        story.name +
-        "</p></div>"
-    );
-    // addStoryType(storyType);
+    let board = "done";
+    let storyUrl = story.url;
+    appendStory(story, board, storyUrl);
   });
 }
 
@@ -343,15 +304,30 @@ function getEmailAddress(id) {
   } else return "test@test.com";
 }
 
-function addStoryType(storyType) {
-  if (storyType === "bug") {
-    $(".card").addClass("bug");
-  } else if (storyType === "feature") {
-    $(".card").addClass("feature");
-  } else if (storyType === "chore") {
-    $(".card").addClass("chore");
-  }
+function appendStory(story, board, storyUrl) {
+  let storyType = story.story_type;
+  let email = getEmailAddress(story.owned_by_id);
+  let urlForGravatar = gravatar(email, 44);
+  $("." + board).append(
+    "<div class='card " + storyType + "'>" +
+      "<img src='" + urlForGravatar + "'>" +
+      "<a href='" + storyUrl + "' target='_blank'>" + "<p>" + story.name + "</p></a>" +
+    "</div>"
+  );
 }
+// function addStoryType(storyType) {
+//   switch (storyType) {
+//     case "bug":
+//       $(".card").addClass("bug");
+//       break;
+//     case "feature":
+//       $(".card").addClass("feature");
+//       break;
+//     case "chore":
+//       $(".card").addClass("chore");
+//       break;
+//   }
+// }
 // inprogressStories = allStories.filter(function(story) {
 //   return story.current_state === "started";
 // });
