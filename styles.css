@@ -22,7 +22,7 @@ body {
 }
 
 .card p {
-  margin: 1rem;
+  margin-top: 15px ;
   text-align: left;
 }
 
@@ -55,7 +55,7 @@ a {
 a:visited,
 a:hover,
 a:active {
-
+  
 } */
 
 a:hover {
@@ -81,6 +81,52 @@ a:hover {
 .chore {
   border-left: 4px solid #669bbc;
 }
+
+.status-badge {
+  font-size: 0.75rem;
+  float: right;
+  color: white;
+  padding: 6px;
+  margin-right: 12px;
+  border-radius: 50vh;
+  text-shadow: 1px 1px 1px #4a4a4a;
+  
+}
+
+.estimate {
+  font-size: .8rem;
+  float: right;
+  background: #669bbc;
+  color: white;
+  text-shadow: 1px 1px 1px #7E7D7D;
+  box-shadow: 1px 1px 1px #7E7D7D;
+  padding: 8px;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.accepted {
+  background: #9E8D41;
+}
+
+.started {
+  background: #5A095A;
+  
+}
+
+.unstarted {
+  background: #555;
+  
+}
+
+.unscheduled {
+  background: #333;
+}
+
+.finished {
+  background: #065006;
+}
+
 
 @media only screen and (max-width: 600px) {
   .container {

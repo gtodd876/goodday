@@ -20,19 +20,6 @@ instance
       inprogressStories,
       doneStories
     );
-    console.log(
-      "after fn",
-      allStories,
-      "all ",
-      todoStories,
-      "todo ",
-      reviewStories,
-      "review ",
-      inprogressStories,
-      "inprogress ",
-      doneStories,
-      "done"
-    );
 
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
   })
@@ -66,19 +53,6 @@ function organizeStories(
     )
       doneStories.push(allStories[i]);
   }
-  console.log(
-    "after loop",
-    allStories,
-    "all ",
-    todoStories,
-    "todo ",
-    reviewStories,
-    "review ",
-    inprogressStories,
-    "inprogress ",
-    doneStories,
-    "done"
-  );
 }
 
 function displayStories(
@@ -89,24 +63,31 @@ function displayStories(
 ) {
   todoStories.forEach(function(story) {
     let board = "todo";
-    console.log(story.url);
     let storyUrl = story.url;
-    appendStory(story, board, storyUrl);
+    let statusBadge = story.current_state;
+    let estimate = story.estimate;    
+    appendStory(story, board, storyUrl, statusBadge, estimate);
   });
   reviewStories.forEach(function(story) {
     let board = "in-progress";
     let storyUrl = story.url;
-    appendStory(story, board, storyUrl);
+    let statusBadge = story.current_state;
+    let estimate = story.estimate;    
+    appendStory(story, board, storyUrl, statusBadge, estimate);
   });
   inprogressStories.forEach(function(story) {
     let board = "ready-for-review";
     let storyUrl = story.url;
-    appendStory(story, board, storyUrl);
+    let statusBadge = story.current_state;
+    let estimate = story.estimate;    
+    appendStory(story, board, storyUrl, statusBadge, estimate);
   });
   doneStories.forEach(function(story) {
     let board = "done";
     let storyUrl = story.url;
-    appendStory(story, board, storyUrl);
+    let statusBadge = story.current_state;
+    let estimate = story.estimate;    
+    appendStory(story, board, storyUrl, statusBadge, estimate);
   });
 }
 
@@ -304,48 +285,17 @@ function getEmailAddress(id) {
   } else return "test@test.com";
 }
 
-function appendStory(story, board, storyUrl) {
+function appendStory(story, board, storyUrl, statusBadge, estimate) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
   let urlForGravatar = gravatar(email, 44);
   $("." + board).append(
     "<div class='card " + storyType + "'>" +
       "<img src='" + urlForGravatar + "'>" +
-      "<a href='" + storyUrl + "' target='_blank'>" + "<p>" + story.name + "</p></a>" +
+      "<p class='estimate'>" + estimate + "</p>" + 
+      "<a href='" + storyUrl + "'>" +
+      "<p>" + story.name + "</p></a>" + 
+      "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
     "</div>"
   );
 }
-// function addStoryType(storyType) {
-//   switch (storyType) {
-//     case "bug":
-//       $(".card").addClass("bug");
-//       break;
-//     case "feature":
-//       $(".card").addClass("feature");
-//       break;
-//     case "chore":
-//       $(".card").addClass("chore");
-//       break;
-//   }
-// }
-// inprogressStories = allStories.filter(function(story) {
-//   return story.current_state === "started";
-// });
-// console.log(inprogressStories);
-// reviewStories = allStories.filter(function(story) {
-//   return story.current_state === "finished";
-// });
-// console.log(reviewStories);
-// doneStories = allStories.filter(function(story) {
-//   return (
-//     story.current_state === "delivered" || story.current_state === "accepted"
-//   );
-// });
-// console.log(doneStories);
-// todoStories = allStories.filter(function(story) {
-//   return (
-//     story.current_state === "unscheduled" ||
-//     story.current_state === "unstarted"
-//   );
-// });
-// console.log(todoStories);
