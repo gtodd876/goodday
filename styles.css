@@ -19,11 +19,18 @@ body {
   background: white;
   margin: 5px;
   box-shadow: 1px 2px 3px #4a4a4a;
+  overflow: auto;
 }
 
 .card p {
   margin: 1rem;
   text-align: left;
+}
+
+.card img {
+  float: left;
+  border-radius: 50%;
+  margin: 20px;
 }
 
 .heading {
@@ -35,32 +42,20 @@ body {
   text-align: center;
 }
 
-.backlog {
-  background: pink;
-}
-
-.todo {
-  background: yellow;
-}
-
-.in-progress {
-  background: lightblue;
-}
-
-.ready-for-review {
-  background: indianred;
-}
-
-.in-qa {
-  background: tan;
-}
-
-.done {
-  background: teal;
-}
-
 .category {
   font-weight: bold;
   font-size: 1.5rem;
   text-align: center;
+}
+
+.bug {
+  border-left: 4px solid #bc6766;
+}
+
+.feature {
+  border-left: 4px solid #f9e584;
+}
+
+.chore {
+  border-left: 4px solid #669bbc;
 }
