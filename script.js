@@ -288,7 +288,7 @@ function getEmailAddress(id) {
 function appendStory(story, board, storyUrl, statusBadge, estimate) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
-  let urlForGravatar = gravatar(email, 44);
+  let urlForGravatar = gravatar(email, size=20);
   if (estimate === undefined) estimate = "";
   $("." + board).append(
     "<div class='card " + storyType + "'>" +
