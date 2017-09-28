@@ -40,7 +40,10 @@ function organizeStories(
       allStories[i].current_state === "unstarted"
     )
       todoStories.push(allStories[i]);
-    if (allStories[i].current_state === "started") {
+    if (
+      allStories[i].current_state === "started" ||
+      allStories[i].current_state === "rejected" 
+    ) {
       inprogressStories.push(allStories[i]);
     }
 
@@ -69,14 +72,14 @@ function displayStories(
     appendStory(story, board, storyUrl, statusBadge, estimate);
   });
   reviewStories.forEach(function(story) {
-    let board = "in-progress";
+    let board = "ready-for-review";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
     let estimate = story.estimate;    
     appendStory(story, board, storyUrl, statusBadge, estimate);
   });
   inprogressStories.forEach(function(story) {
-    let board = "ready-for-review";
+    let board = "in-progress";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
     let estimate = story.estimate;    
@@ -288,14 +291,15 @@ function getEmailAddress(id) {
 function appendStory(story, board, storyUrl, statusBadge, estimate) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
-  let urlForGravatar = gravatar(email, 44);
+  let urlForGravatar = gravatar(email, {size: "30"});
+  if (estimate === undefined) estimate = "";
   $("." + board).append(
     "<div class='card " + storyType + "'>" +
-      "<img src='" + urlForGravatar + "'>" +
-      "<p class='estimate'>" + estimate + "</p>" + 
-      "<a href='" + storyUrl + "'>" +
-      "<p>" + story.name + "</p></a>" + 
-      "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
+    "<a href='" + storyUrl + "'>" +
+    "<p>" + story.name + "</p></a>" + 
+    "<img src='" + urlForGravatar + "'>" +
+    "<p class='estimate'>" + estimate + "</p>" + 
+    "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
     "</div>"
   );
 }
