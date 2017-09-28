@@ -22,6 +22,7 @@ instance
     );
 
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
+    initializeDragAndDrop();
   })
   .catch(function(error) {
     console.log(error);
@@ -302,4 +303,16 @@ function appendStory(story, board, storyUrl, statusBadge, estimate) {
     "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
     "</div>"
   );
+}
+
+function initializeDragAndDrop () {
+  $(".todo, .in-progress, .ready-for-review, .done").sortable({
+    connectWith: ".todo, .in-progress, .ready-for-review, .done"
+  });
+  $(".todo").on("sortstop", function(event, ui) {
+    
+  });
+  $( ".in-progress" ).on( "sortstop", function( event, ui ) {} );
+  $( ".ready-for-review" ).on( "sortstop", function( event, ui ) {} );
+  $( ".done" ).on( "sortstop", function( event, ui ) {} );
 }
