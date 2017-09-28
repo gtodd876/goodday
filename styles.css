@@ -17,7 +17,7 @@ body {
 .card {
   background: white;
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px #4a4a4a;
+  box-shadow: 1px 1px 2px #888;
   overflow: auto;
   position: relative;
 }
@@ -30,7 +30,8 @@ body {
 .card img {
   float: left;
   border-radius: 50%;
-  margin: 0px 0px 5px 8px;
+  margin: 0px 0px 8px 12px;
+  /* padding: 0, 0, 10px, 10px; */
 }
 
 .heading {
@@ -86,10 +87,9 @@ a:hover {
 .status-badge {
   font-size: 0.75rem;
   float: right;
-  color: white;
-  padding: 6px;
+  color: #555;
+  padding: 4px 8px 6px 8px;
   border-radius: 50vh;
-  text-shadow: 1px 1px 1px #4a4a4a;
   position: absolute;
   bottom: 5px;
   right: 35px;
@@ -98,46 +98,51 @@ a:hover {
 }
 
 .estimate {
-  font-size: .8rem;
+  font-size: 0.75rem;
+  min-width: 15px;
   float: right;
-  background: #247BA0;
-  color: white;
-  text-shadow: 1px 1px 1px #7E7D7D;
-  box-shadow: 1px 1px 1px #7E7D7D;
-  padding: 6px;
-  margin-right: 4px;
+  background: #9ED1E4;
+  color: #FCFCFC;
+  /* text-shadow: 1px 1px 1px #7E7D7D; */
   position: absolute;
-  bottom: 5px;
+  bottom: 6px;
   right: 5px;
-  border-radius: 50%;
+  border-radius: 100%;
+  padding: 4px 1px 4px 9px;
+  text-align: center;
 }
 
 .estimate:empty {
-  background: white;
+  visibility: hidden;
+  /* background: white;
   text-shadow: none;
-  box-shadow: none;
+  box-shadow: none; */
 }
 
 .accepted {
-  background: #9E8D41;
+  background: #D9EFD1;
 }
 
 .started {
-  background: #5A095A;
+  background: #F3F3D4;
   
 }
 
 .unstarted {
-  background: #555;
+  background: #F4F4F4;
   
 }
 
 .unscheduled {
-  background: #333;
+  background: #F4F4F4;
 }
 
 .finished {
-  background: #70C1B3;
+  background: #E4EFF7;
+}
+
+.rejected {
+  background: #F08B89;
 }
 
 
