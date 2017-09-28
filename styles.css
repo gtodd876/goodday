@@ -19,17 +19,18 @@ body {
   margin-bottom: 10px;
   box-shadow: 1px 1px 2px #4a4a4a;
   overflow: auto;
+  position: relative;
 }
 
 .card p {
-  margin-top: 15px ;
+  margin: 12px 0 5px 12px;
   text-align: left;
 }
 
 .card img {
   float: left;
   border-radius: 50%;
-  margin: 20px;
+  margin: 0px 0px 5px 8px;
 }
 
 .heading {
@@ -71,11 +72,11 @@ a:hover {
 }
 
 .bug {
-  border-left: 4px solid #bc6766;
+  border-left: 4px solid #F25F5C;
 }
 
 .feature {
-  border-left: 4px solid #f9e584;
+  border-left: 4px solid #FFE066;
 }
 
 .chore {
@@ -87,22 +88,34 @@ a:hover {
   float: right;
   color: white;
   padding: 6px;
-  margin-right: 12px;
   border-radius: 50vh;
   text-shadow: 1px 1px 1px #4a4a4a;
+  position: absolute;
+  bottom: 5px;
+  right: 35px;
+
   
 }
 
 .estimate {
   font-size: .8rem;
   float: right;
-  background: #669bbc;
+  background: #247BA0;
   color: white;
   text-shadow: 1px 1px 1px #7E7D7D;
   box-shadow: 1px 1px 1px #7E7D7D;
-  padding: 8px;
-  margin-right: 12px;
+  padding: 6px;
+  margin-right: 4px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
   border-radius: 50%;
+}
+
+.estimate:empty {
+  background: white;
+  text-shadow: none;
+  box-shadow: none;
 }
 
 .accepted {
@@ -124,11 +137,17 @@ a:hover {
 }
 
 .finished {
-  background: #065006;
+  background: #70C1B3;
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 725px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media only screen and (max-width: 550px) {
   .container {
     grid-template-columns: 1fr;
   }

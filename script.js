@@ -289,13 +289,14 @@ function appendStory(story, board, storyUrl, statusBadge, estimate) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
   let urlForGravatar = gravatar(email, 44);
+  if (estimate === undefined) estimate = "";
   $("." + board).append(
     "<div class='card " + storyType + "'>" +
-      "<img src='" + urlForGravatar + "'>" +
-      "<p class='estimate'>" + estimate + "</p>" + 
-      "<a href='" + storyUrl + "'>" +
-      "<p>" + story.name + "</p></a>" + 
-      "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
+    "<a href='" + storyUrl + "'>" +
+    "<p>" + story.name + "</p></a>" + 
+    "<img src='" + urlForGravatar + "'>" +
+    "<p class='estimate'>" + estimate + "</p>" + 
+    "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
     "</div>"
   );
 }
