@@ -316,13 +316,15 @@ function initializeDragAndDrop () {
   $(".todo").on("sortstop", function(event, ui) {
     let id = ui.item.data("id"); 
     let newStatus = ($("[data-id="+id+"]").parent().attr('class').split(' ')[0]);
+    newStatus = '"'+newStatus+'"';
+    console.log(newStatus);
     let beforeId = ($("[data-id="+id+"]").prev().attr("data-id"));
     let urlId = "/" + ui.item.data("id");
     if (beforeId === undefined) beforeId = null;
     
     instance.put("/" + id, {
-      headers: {"Content-Type": "application/json"},
-      data: {"current_state": "started"}     
+      "current_state": newStatus,
+      "estimate": 1
     })
     .then(function (response) {
       console.log(response);
