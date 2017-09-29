@@ -313,12 +313,11 @@ function appendStory(story, board, storyUrl, statusBadge, estimate, storyId) {
 }
 
 function initializeDragAndDrop () {
-  $(".todo, .in-progress, .ready-for-review, .done").sortable({
-    connectWith: ".todo, .in-progress, .ready-for-review, .done"
-  });
-
-  $(".js-board").on("sortstop", function(event, ui) {
+  $(".js-board").sortable({
+    connectWith: ".js-board",
+    stop: function(event, ui) {
       updatePivotal(ui);
+    }
   });
 } //end initializeDragAndDrop
 function updatePivotal(ui) {
@@ -327,9 +326,10 @@ function updatePivotal(ui) {
     let newStatus = ui.item.closest(".js-board").data("status");
     let beforeId = ui.item.prev().data("id");
     let urlId = "/" + ui.item.data("id");
-    if(beforeId === undefined) beforeId = null;
+    if (beforeId === undefined) beforeId = null;
     instance.put("/" + id, {
     "current_state": newStatus,
+    "before_id": beforeId
 })
     .then(function(response) {
       // updateBadge(response);
