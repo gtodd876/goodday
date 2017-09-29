@@ -313,39 +313,31 @@ function initializeDragAndDrop () {
   $(".todo, .in-progress, .ready-for-review, .done").sortable({
     connectWith: ".todo, .in-progress, .ready-for-review, .done"
   });
-  $(".todo").on("sortstop", function(event, ui) {
+
+  $(".js-board").on("sortstop", function(event, ui) {
       updatePivotal(ui);
-  });
-
-  $(".in-progress").on("sortstop", function(event, ui) {
-    updatePivotal(ui);
-  });
-
-  $(".ready-for-review").on( "sortstop", function(event, ui) {
-    updatePivotal(ui);
-  });
-
-  $(".done").on("sortstop", function(event, ui) {
-    updatePivotal(ui);
   });
 } //end initializeDragAndDrop
 function updatePivotal(ui) {
     let id = ui.item.data("id");
     console.log(ui.item);
     let newStatus = ui.item.closest(".js-board").data("status");
-    let beforeId =($("[data-id=" + id + "]").prev().attr("data-id"));
+    let beforeId = ui.item.prev().data("id");
     let urlId = "/" + ui.item.data("id");
-    if(beforeId === undefined)
-    beforeId = null;
+    if(beforeId === undefined) beforeId = null;
     instance.put("/" + id, {
     "current_state": newStatus,
-    "estimate": 1
 })
     .then(function(response) {
+      // updateBadge(response);
     console.log(response);
 })
     .catch(function(error) {
     console.log(error);
 });
-}
+} // end of updatePivotal
+
+// function updateBadge(response) {
+//   console.log(response.data.current_state)
+// }
 
