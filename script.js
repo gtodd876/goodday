@@ -314,7 +314,7 @@ function initializeDragAndDrop () {
     connectWith: ".todo, .in-progress, .ready-for-review, .done"
   });
   $(".todo").on("sortstop", function(event, ui) {
-    console.log(ui.item); 
+    let id = ui.item.data("id"); 
     // instance.post({
     //   headers: {"Content-Type": "application/json"},
     //   data: {current_state: 'unstarted'}  
