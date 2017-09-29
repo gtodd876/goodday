@@ -315,6 +315,11 @@ function initializeDragAndDrop () {
   });
   $(".todo").on("sortstop", function(event, ui) {
     let id = ui.item.data("id"); 
+    let newStatus = ($("[data-id="+id+"]").parent().attr('class').split(' ')[0]);
+    let beforeId = ($("[data-id="+id+"]").prev().attr("data-id"));
+    if (beforeId === undefined) beforeId = null;
+    console.log(beforeId);
+    
     // instance.post({
     //   headers: {"Content-Type": "application/json"},
     //   data: {current_state: 'unstarted'}  
