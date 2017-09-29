@@ -1,6 +1,6 @@
 let instance = axios.create({
   baseURL:
-    "https://www.pivotaltracker.com/services/v5/projects/2111883/stories/",
+    "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
   timeout: 1000,
   headers: { "X-TrackerToken": "849f56353d70242c0a95548fc4b022cd" }
 });
@@ -317,19 +317,19 @@ function initializeDragAndDrop () {
     let id = ui.item.data("id"); 
     let newStatus = ($("[data-id="+id+"]").parent().attr('class').split(' ')[0]);
     let beforeId = ($("[data-id="+id+"]").prev().attr("data-id"));
+    let urlId = "/" + ui.item.data("id");
     if (beforeId === undefined) beforeId = null;
-    console.log(beforeId);
     
-    // instance.post({
-    //   headers: {"Content-Type": "application/json"},
-    //   data: {current_state: 'unstarted'}  
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });  
+    instance.put("/" + id, {
+      headers: {"Content-Type": "application/json"},
+      data: {"current_state": "started"}     
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });  
   });
   $( ".in-progress" ).on( "sortstop", function( event, ui ) {} );
   $( ".ready-for-review" ).on( "sortstop", function( event, ui ) {} );
