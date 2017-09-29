@@ -324,11 +324,14 @@ function updatePivotal(ui) {
     let id = ui.item.data("id");
     console.log(ui.item);
     let newStatus = ui.item.closest(".js-board").data("status");
-    let beforeId = ui.item.prev().data("id");
+    let afterId = ui.item.prev().data("id");
+    let beforeId = ui.item.next().data("id");
     let urlId = "/" + ui.item.data("id");
     if (beforeId === undefined) beforeId = null;
+    if (afterId === undefined) afterId = null;
     instance.put("/" + id, {
     "current_state": newStatus,
+    "after_id": afterId,
     "before_id": beforeId
 })
     .then(function(response) {
