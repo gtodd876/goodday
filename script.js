@@ -314,26 +314,38 @@ function initializeDragAndDrop () {
     connectWith: ".todo, .in-progress, .ready-for-review, .done"
   });
   $(".todo").on("sortstop", function(event, ui) {
-    let id = ui.item.data("id"); 
-    let newStatus = ($("[data-id="+id+"]").parent().attr('class').split(' ')[0]);
-    newStatus = '"'+newStatus+'"';
-    console.log(newStatus);
-    let beforeId = ($("[data-id="+id+"]").prev().attr("data-id"));
-    let urlId = "/" + ui.item.data("id");
-    if (beforeId === undefined) beforeId = null;
-    
-    instance.put("/" + id, {
-      "current_state": newStatus,
-      "estimate": 1
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });  
+      updatePivotal(ui);
   });
-  $( ".in-progress" ).on( "sortstop", function( event, ui ) {} );
-  $( ".ready-for-review" ).on( "sortstop", function( event, ui ) {} );
-  $( ".done" ).on( "sortstop", function( event, ui ) {} );
+
+  $(".in-progress").on("sortstop", function(event, ui) {
+    updatePivotal(ui);
+  });
+
+  $(".ready-for-review").on( "sortstop", function(event, ui) {
+    updatePivotal(ui);
+  });
+
+  $(".done").on("sortstop", function(event, ui) {
+    updatePivotal(ui);
+  });
+} //end initializeDragAndDrop
+function updatePivotal(ui) {
+    let id = ui.item.data("id");
+    console.log(ui.item);
+    let newStatus = ui.item.closest(".js-board").data("status");
+    let beforeId =($("[data-id=" + id + "]").prev().attr("data-id"));
+    let urlId = "/" + ui.item.data("id");
+    if(beforeId === undefined)
+    beforeId = null;
+    instance.put("/" + id, {
+    "current_state": newStatus,
+    "estimate": 1
+})
+    .then(function(response) {
+    console.log(response);
+})
+    .catch(function(error) {
+    console.log(error);
+});
 }
+
