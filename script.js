@@ -1,9 +1,12 @@
+let mykey = config.MY_API_KEY;
+
 let instance = axios.create({
   baseURL:
-    "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
+  "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
   timeout: 1000,
-  headers: { "X-TrackerToken": "849f56353d70242c0a95548fc4b022cd" }
+  headers: { "X-TrackerToken": mykey }
 });
+
 
 instance
   .get()
