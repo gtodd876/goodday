@@ -3,7 +3,7 @@ let mykey = config.MY_API_KEY;
 let instance = axios.create({
   baseURL:
   "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
-  timeout: 1000,
+  timeout: 2000,
   headers: { "X-TrackerToken": mykey }
 });
 
@@ -322,28 +322,42 @@ function initializeDragAndDrop () {
 } //end initializeDragAndDrop
 function updatePivotal(ui) {
     let id = ui.item.data("id");
-    console.log(ui.item);
     let newStatus = ui.item.closest(".js-board").data("status");
     let afterId = ui.item.prev().data("id");
     let beforeId = ui.item.next().data("id");
     let urlId = "/" + ui.item.data("id");
+    let currentCard = ui.item;
     if (beforeId === undefined) beforeId = null;
     if (afterId === undefined) afterId = null;
-    instance.put("/" + id, {
-    "current_state": newStatus,
-    "after_id": afterId,
-    "before_id": beforeId
-})
-    .then(function(response) {
-      // updateBadge(response);
-    console.log(response);
-})
-    .catch(function(error) {
-    console.log(error);
-});
-} // end of updatePivotal
+    if (newStatus === 'accepted') {
+      instance.put("/" + id, {
+      "current_state": newStatus,
+      })
+      .then(function(response) {
+        currentCard.find(".status-badge").removeClass()
+        .addClass("status-badge " + response.data.current_state)
+        .text(response.data.current_state);
+        
+      })
+      .catch(function(error) {
+      console.log(error);
+      });
+    } else {
+      instance.put("/" + id, {
+        "current_state": newStatus,
+        "after_id": afterId,
+        "before_id": beforeId
+        })
+        .then(function(response) {
+          currentCard.find(".status-badge").removeClass()
+          .addClass("status-badge " + response.data.current_state)
+          .text(response.data.current_state);
+          
+        })
+        .catch(function(error) {
+        console.log(error);
+        });
+    }
 
-// function updateBadge(response) {
-//   console.log(response.data.current_state)
-// }
+} // end of updatePivotal
 
