@@ -69,29 +69,33 @@ function displayStories(
     let board = "todo";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
-    let estimate = story.estimate;    
-    appendStory(story, board, storyUrl, statusBadge, estimate);
+    let estimate = story.estimate;
+    let storyId = story.id; 
+    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
   });
   reviewStories.forEach(function(story) {
     let board = "ready-for-review";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
     let estimate = story.estimate;    
-    appendStory(story, board, storyUrl, statusBadge, estimate);
+    let storyId = story.id; 
+    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
   });
   inprogressStories.forEach(function(story) {
     let board = "in-progress";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
     let estimate = story.estimate;    
-    appendStory(story, board, storyUrl, statusBadge, estimate);
+    let storyId = story.id; 
+    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
   });
   doneStories.forEach(function(story) {
     let board = "done";
     let storyUrl = story.url;
     let statusBadge = story.current_state;
     let estimate = story.estimate;    
-    appendStory(story, board, storyUrl, statusBadge, estimate);
+    let storyId = story.id; 
+    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
   });
 }
 
@@ -289,13 +293,13 @@ function getEmailAddress(id) {
   } else return "test@test.com";
 }
 
-function appendStory(story, board, storyUrl, statusBadge, estimate) {
+function appendStory(story, board, storyUrl, statusBadge, estimate, storyId) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
   let urlForGravatar = gravatar(email, {size: "30"});
   if (estimate === undefined) estimate = "";
   $("." + board).append(
-    "<div class='card " + storyType + "'>" +
+    "<div class='card " + storyType + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
     "<p>" + story.name + "</p></a>" + 
     "<img src='" + urlForGravatar + "'>" +
@@ -310,7 +314,17 @@ function initializeDragAndDrop () {
     connectWith: ".todo, .in-progress, .ready-for-review, .done"
   });
   $(".todo").on("sortstop", function(event, ui) {
-    
+    console.log(ui.item); 
+    // instance.post({
+    //   headers: {"Content-Type": "application/json"},
+    //   data: {current_state: 'unstarted'}  
+    // })
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });  
   });
   $( ".in-progress" ).on( "sortstop", function( event, ui ) {} );
   $( ".ready-for-review" ).on( "sortstop", function( event, ui ) {} );
