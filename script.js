@@ -7,7 +7,6 @@ let instance = axios.create({
   headers: { "X-TrackerToken": mykey }
 });
 
-
 instance
   .get()
   .then(function(response) {
@@ -23,84 +22,55 @@ instance
       inprogressStories,
       doneStories
     );
-
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
     initializeDragAndDrop();
   })
   .catch(function(error) {
     console.log(error);
   });
-
-function organizeStories(
-  allStories,
-  todoStories,
-  reviewStories,
-  inprogressStories,
-  doneStories
-) {
-  for (let i = 0; i < allStories.length; i++) {
-    if (
-      allStories[i].current_state === "unscheduled" ||
-      allStories[i].current_state === "unstarted"
-    )
+  
+  function organizeStories(
+    allStories,
+    todoStories,
+    reviewStories,
+    inprogressStories,
+    doneStories
+  ) {
+    for (let i = 0; i < allStories.length; i++) {
+      if (
+        allStories[i].current_state === "unscheduled" ||
+        allStories[i].current_state === "unstarted"
+      )
       todoStories.push(allStories[i]);
-    if (
-      allStories[i].current_state === "started" ||
-      allStories[i].current_state === "rejected" 
-    ) {
-      inprogressStories.push(allStories[i]);
-    }
-
-    if (allStories[i].current_state === "finished") {
-      reviewStories.push(allStories[i]);
-    }
-    if (
-      allStories[i].current_state === "delivered" ||
-      allStories[i].current_state === "accepted"
-    )
+      if (
+        allStories[i].current_state === "started" ||
+        allStories[i].current_state === "rejected" 
+      ) {
+        inprogressStories.push(allStories[i]);
+      }
+      
+      if (allStories[i].current_state === "finished") {
+        reviewStories.push(allStories[i]);
+      }
+      if (
+        allStories[i].current_state === "delivered" ||
+        allStories[i].current_state === "accepted"
+      )
       doneStories.push(allStories[i]);
+    }
   }
-}
-
-function displayStories(
-  todoStories,
-  reviewStories,
-  inprogressStories,
-  doneStories
-) {
-  todoStories.forEach(function(story) {
-    let board = "todo";
-    let storyUrl = story.url;
-    let statusBadge = story.current_state;
-    let estimate = story.estimate;
-    let storyId = story.id; 
-    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
-  });
-  reviewStories.forEach(function(story) {
-    let board = "ready-for-review";
-    let storyUrl = story.url;
-    let statusBadge = story.current_state;
-    let estimate = story.estimate;    
-    let storyId = story.id; 
-    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
-  });
-  inprogressStories.forEach(function(story) {
-    let board = "in-progress";
-    let storyUrl = story.url;
-    let statusBadge = story.current_state;
-    let estimate = story.estimate;    
-    let storyId = story.id; 
-    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
-  });
-  doneStories.forEach(function(story) {
-    let board = "done";
-    let storyUrl = story.url;
-    let statusBadge = story.current_state;
-    let estimate = story.estimate;    
-    let storyId = story.id; 
-    appendStory(story, board, storyUrl, statusBadge, estimate, storyId);
-  });
-}
+  
+  function displayStories(todoStories, reviewStories, inprogressStories, doneStories) {
+    for (let i = 0; i < arguments.length; i++) {
+      arguments[i].forEach(function(story) {
+        let storyUrl = story.url;
+        let statusBadge = story.current_state;
+        let estimate = story.estimate;
+        let storyId = story.id; 
+        appendStory(story, storyUrl, statusBadge, estimate, storyId);
+      });
+    }
+  }
 
 function gravatar(email, options) {
   // using md5() from here: http://www.myersdaily.org/joseph/javascript/md5-text.html
@@ -296,12 +266,14 @@ function getEmailAddress(id) {
   } else return "test@test.com";
 }
 
-function appendStory(story, board, storyUrl, statusBadge, estimate, storyId) {
+function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
+  //console.log(story, storyUrl, statusBadge, estimate, storyId, email, storyType);
   let urlForGravatar = gravatar(email, {size: "30"});
   if (estimate === undefined) estimate = "";
-  $("." + board).append(
+  // console.log($("div[data-accepts='started']").get());
+  $("div[data-accepts~='" + statusBadge + "']").append(
     "<div class='card " + storyType + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
     "<p>" + story.name + "</p></a>" + 
@@ -320,6 +292,7 @@ function initializeDragAndDrop () {
     }
   });
 } //end initializeDragAndDrop
+
 function updatePivotal(ui) {
     let id = ui.item.data("id");
     let newStatus = ui.item.closest(".js-board").data("status");
@@ -331,7 +304,7 @@ function updatePivotal(ui) {
     if (afterId === undefined) afterId = null;
     if (newStatus === 'accepted') {
       instance.put("/" + id, {
-      "current_state": newStatus,
+      "current_state": newStatus
       })
       .then(function(response) {
         currentCard.find(".status-badge").removeClass()
