@@ -302,7 +302,7 @@ function updatePivotal(ui) {
     let currentCard = ui.item;
     if (beforeId === undefined) beforeId = null;
     if (afterId === undefined) afterId = null;
-    if (newStatus === 'accepted') {
+    if (newStatus === "accepted") {
       instance.put("/" + id, {
       "current_state": newStatus
       })
