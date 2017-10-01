@@ -276,7 +276,7 @@ function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
   $("div[data-accepts~='" + statusBadge + "']").append(
     "<div class='card " + storyType + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
-    "<p>" + story.name + "</p></a>" + 
+    "<p class=name>" + story.name + "</p></a>" + 
     "<img src='" + urlForGravatar + "'>" +
     "<p class='estimate'>" + estimate + "</p>" + 
     "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
@@ -330,7 +330,7 @@ function updatePivotal(ui) {
         .catch(function(error) {
         console.log(error);
         });
-    }
+      }
 
 } // end of updatePivotal
 
