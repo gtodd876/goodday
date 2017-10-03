@@ -56,7 +56,7 @@ var config = {
   MY_API_KEY: 'YOUR_API_KEY_FROM_PIVOTAL_TRACKER'
 }
 ```
-Your Pivotal TRacker API token can be located within you Profile settings at the bottom of the page.
+Your Pivotal Tracker API token can be located within your Profile settings at the bottom of the page.
 <p align="center">
   <img src = "https://drive.google.com/uc?export=download&id=0BzlYXvLQyegiLXBQRnVKQV9fUVU" width=450>
 </p>
