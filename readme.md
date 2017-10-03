@@ -14,7 +14,6 @@
 - [Features](#features)
 - [Feedback](#feedback)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Introduction
  I decided to take on this project to build a useful application that uses an remote API to update the DOM. Pivotal Tracker's API was a great choice as it is an amazing agile resource. It's been a blast learning the Pivotal Tracker API and quickly became a meta app making process. As it evolved, I was using the app I making to efficently make the app I'm using :) This process has also taught me the ins and outs of building a clean UI that is satisfying to use! 
@@ -41,17 +40,29 @@ Accepted <br>
 Finished <br>
 * Drag stories from one column to the next to easily change the stories state
 * Simplified columns for "To Do", "In Progress", "Ready For Review, and "Done"
-* Create new issues
-* Each story name is a direct link to the Pivotal url for that story
-* Instant updates sync to Pivotal
+* Each story name is also direct link to the Pivotal Tracker URL for that story
+* Changes in Pivot Cards sync to Pivotal Tracker project
+* Responsive layout using CSS Grid
 
 <p align="center">
   <img src = "https://drive.google.com/uc?export=download&id=0BzlYXvLQyegiaGE3cU1WWUN3WWs" width=700>
 </p>
 
+## Configuration
+
+After cloning this repo from Github, you will need to create a config.js file in the projects root folder containing:
+```
+var config = {
+  MY_API_KEY: 'YOUR_API_KEY_FROM_PIVOTAL_TRACKER'
+}
+```
+Your Pivotal TRacker API token can be located within you Profile settings at the bottom of the page.
+<p align="center">
+  <img src = "https://drive.google.com/uc?export=download&id=0BzlYXvLQyegiLXBQRnVKQV9fUVU" width=450>
+</p>
+
 ## Feedback
 
 Feel free to send me feedback on [Twitter](https://twitter.com/gtodd876). Feature requests are always welcome. 
-
 
 
