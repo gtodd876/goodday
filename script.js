@@ -24,6 +24,7 @@ instance
     );
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
     initializeDragAndDrop();
+    
   })
   .catch(function(error) {
     console.log(error);
@@ -274,7 +275,7 @@ function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
   if (estimate === undefined) estimate = "";
   // console.log($("div[data-accepts='started']").get());
   $("div[data-accepts~='" + statusBadge + "']").append(
-    "<div class='card " + storyType + "' data-id='" + storyId + "'>" +
+    "<div class='" + storyType + " card" + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
     "<p class=name>" + story.name + "</p></a>" + 
     "<img src='" + urlForGravatar + "'>" +
@@ -287,9 +288,21 @@ function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
 function initializeDragAndDrop () {
   $(".js-board").sortable({
     connectWith: ".js-board",
+    beforeStop: function (event, ui) {
+    
+    },
     stop: function(event, ui) {
+      let isChore = $(ui.item[0]).is(".chore");
+      let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
+      if (isChore && isReviewColumn) {
+        $(this).sortable("cancel");  
+        $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
+          $(".ready-for-review").removeClass("warn", 700);
+        });
+      }
       updatePivotal(ui);
     }
+  
   });
 } //end initializeDragAndDrop
 
