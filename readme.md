@@ -12,6 +12,7 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Configuration](#configuration)
 - [Feedback](#feedback)
 
 
