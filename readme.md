@@ -50,7 +50,7 @@ Finished <br>
 
 ## Configuration
 
-After cloning this repo from Github, you will need to create a config.js file in the projects root folder containing:
+After cloning this repo from Github, you will need to create a config.js file in the project's root folder containing:
 ```
 var config = {
   MY_API_KEY: 'YOUR_API_KEY_FROM_PIVOTAL_TRACKER'
@@ -58,11 +58,12 @@ var config = {
 ```
 Your Pivotal Tracker API token can be located within your Profile settings at the bottom of the page.
 <p align="center">
-  <img src = "https://drive.google.com/uc?export=download&id=0BzlYXvLQyegiLXBQRnVKQV9fUVU" width=450>
+  <img src = "https://drive.google.com/uc?export=download&id=0BzlYXvLQyegiVnEyclN6NmZ1UXM" width=450>
 </p>
 
 ## Feedback
 
 Feel free to send me feedback on [Twitter](https://twitter.com/gtodd876). Feature requests are always welcome. 
 
+https://drive.google.com/open?id=0BzlYXvLQyegiVnEyclN6NmZ1UXM
 
