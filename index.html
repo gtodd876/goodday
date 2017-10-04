@@ -14,22 +14,25 @@
 
 <body>
   <div class="container">
-    <div class="todo board">
+    <div class="todo board js-board" data-status="unstarted" data-accepts="unscheduled unstarted">
       <p class="heading">To Do</p>
     </div>
-    <div class="in-progress board">
+    <div class="in-progress js-board board" data-status="started" data-accepts="started rejected ">
       <p class="heading">In Progress</p>
     </div>
-    <div class="ready-for-review board">
+    <div class="ready-for-review js-board board" data-status="finished" data-accepts="finished">
       <p class="heading">Ready For Review</p>
     </div>
-    <div class="done board">
+    <div class="done js-board board" data-status="accepted" data-accepts="accepted delivered">
       <p class="heading">Done</p>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+    crossorigin="anonymous"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="config.js"></script>
   <script src="./script.js"></script>
 </body>
 
