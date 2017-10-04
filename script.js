@@ -15,7 +15,10 @@ instance
     let reviewStories = [];
     let inprogressStories = [];
     let doneStories = [];
-    
+    let count = {
+      started: 0,
+      inProgress: 0
+    }
     organizeStories(
       allStories,
       todoStories,
