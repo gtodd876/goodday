@@ -65,11 +65,11 @@ instance
   function displayStories(...storyColumns) {
       storyColumns.forEach(function(columns) {
         columns.forEach(function(story) {
-        let storyUrl = story.url;
-        let statusBadge = story.current_state;
-        let estimate = story.estimate;
-        let storyId = story.id; 
-        appendStory(story, storyUrl, statusBadge, estimate, storyId);
+          let storyUrl = story.url;
+          let statusBadge = story.current_state;
+          let estimate = story.estimate;
+          let storyId = story.id; 
+          appendStory(story, storyUrl, statusBadge, estimate, storyId);
       });
     });
   }
