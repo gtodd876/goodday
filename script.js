@@ -1,8 +1,8 @@
 let mykey = config.MY_API_KEY;
+let myProjectId = config.MY_PROJECT_ID;
 
 let instance = axios.create({
-  baseURL:
-  "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
+  baseURL: "https://www.pivotaltracker.com/services/v5/projects/" + myProjectId + "/stories/",
   timeout: 2000,
   headers: { "X-TrackerToken": mykey }
 });
@@ -65,16 +65,16 @@ instance
     }
   }
   
-  function displayStories(todoStories, reviewStories, inprogressStories, doneStories) {
-    for (let i = 0; i < arguments.length; i++) {
-      arguments[i].forEach(function(story) {
-        let storyUrl = story.url;
-        let statusBadge = story.current_state;
-        let estimate = story.estimate;
-        let storyId = story.id; 
-        appendStory(story, storyUrl, statusBadge, estimate, storyId);
+  function displayStories(...storyColumns) {
+      storyColumns.forEach(function(columns) {
+        columns.forEach(function(story) {
+          let storyUrl = story.url;
+          let statusBadge = story.current_state;
+          let estimate = story.estimate;
+          let storyId = story.id; 
+          appendStory(story, storyUrl, statusBadge, estimate, storyId);
       });
-    }
+    });
   }
 
 function gravatar(email, options) {
@@ -274,10 +274,8 @@ function getEmailAddress(id) {
 function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
-  //console.log(story, storyUrl, statusBadge, estimate, storyId, email, storyType);
   let urlForGravatar = gravatar(email, {size: "30"});
   if (estimate === undefined) estimate = "";
-  // console.log($("div[data-accepts='started']").get());
   $("div[data-accepts~='" + statusBadge + "']").append(
     "<div class='" + storyType + " card" + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
