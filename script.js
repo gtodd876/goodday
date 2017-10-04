@@ -1,8 +1,8 @@
 let mykey = config.MY_API_KEY;
+let myProjectId = config.MY_PROJECT_ID;
 
 let instance = axios.create({
-  baseURL:
-  "https://www.pivotaltracker.com/services/v5/projects/2111883/stories",
+  baseURL: myProjectId,
   timeout: 2000,
   headers: { "X-TrackerToken": mykey }
 });
@@ -15,6 +15,7 @@ instance
     let reviewStories = [];
     let inprogressStories = [];
     let doneStories = [];
+    
     organizeStories(
       allStories,
       todoStories,
@@ -24,6 +25,7 @@ instance
     );
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
     initializeDragAndDrop();
+    
   })
   .catch(function(error) {
     console.log(error);
@@ -60,16 +62,16 @@ instance
     }
   }
   
-  function displayStories(todoStories, reviewStories, inprogressStories, doneStories) {
-    for (let i = 0; i < arguments.length; i++) {
-      arguments[i].forEach(function(story) {
+  function displayStories(...storyColumns) {
+      storyColumns.forEach(function(columns) {
+        columns.forEach(function(story) {
         let storyUrl = story.url;
         let statusBadge = story.current_state;
         let estimate = story.estimate;
         let storyId = story.id; 
         appendStory(story, storyUrl, statusBadge, estimate, storyId);
       });
-    }
+    });
   }
 
 function gravatar(email, options) {
@@ -269,14 +271,12 @@ function getEmailAddress(id) {
 function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
   let storyType = story.story_type;
   let email = getEmailAddress(story.owned_by_id);
-  //console.log(story, storyUrl, statusBadge, estimate, storyId, email, storyType);
   let urlForGravatar = gravatar(email, {size: "30"});
   if (estimate === undefined) estimate = "";
-  // console.log($("div[data-accepts='started']").get());
   $("div[data-accepts~='" + statusBadge + "']").append(
-    "<div class='card " + storyType + "' data-id='" + storyId + "'>" +
+    "<div class='" + storyType + " card" + "' data-id='" + storyId + "'>" +
     "<a href='" + storyUrl + "'>" +
-    "<p>" + story.name + "</p></a>" + 
+    "<p class=name>" + story.name + "</p></a>" + 
     "<img src='" + urlForGravatar + "'>" +
     "<p class='estimate'>" + estimate + "</p>" + 
     "<p class='status-badge " + statusBadge + "'>" + statusBadge + "</p>" + 
@@ -287,9 +287,21 @@ function appendStory(story, storyUrl, statusBadge, estimate, storyId) {
 function initializeDragAndDrop () {
   $(".js-board").sortable({
     connectWith: ".js-board",
+    beforeStop: function (event, ui) {
+    
+    },
     stop: function(event, ui) {
+      let isChore = $(ui.item[0]).is(".chore");
+      let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
+      if (isChore && isReviewColumn) {
+        $(this).sortable("cancel");  
+        $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
+          $(".ready-for-review").removeClass("warn", 700);
+        });
+      }
       updatePivotal(ui);
     }
+  
   });
 } //end initializeDragAndDrop
 
@@ -330,7 +342,7 @@ function updatePivotal(ui) {
         .catch(function(error) {
         console.log(error);
         });
-    }
+      }
 
 } // end of updatePivotal
 
