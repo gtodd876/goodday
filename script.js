@@ -293,6 +293,14 @@ function initializeDragAndDrop () {
     beforeStop: function (event, ui) {
     
     },
+    start: function(event, ui) {
+      let isChore = $(ui.item[0]).is(".chore");
+      if (isChore) {
+        $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
+          $(".ready-for-review").removeClass("warn", 700);
+        });
+      }
+    },
     stop: function(event, ui) {
       let isChore = $(ui.item[0]).is(".chore");
       let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
