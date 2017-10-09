@@ -15,7 +15,10 @@ instance
     let reviewStories = [];
     let inprogressStories = [];
     let doneStories = [];
-    
+    let count = {
+      started: 0,
+      inProgress: 0
+    }
     organizeStories(
       allStories,
       todoStories,
@@ -290,9 +293,21 @@ function initializeDragAndDrop () {
     beforeStop: function (event, ui) {
     
     },
+    items: ".card:not(.heading)",
+    start: function(event, ui) {
+      let isChore = $(ui.item[0]).is(".chore");
+      if (isChore) {
+        $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
+        });
+      }
+    },
     stop: function(event, ui) {
       let isChore = $(ui.item[0]).is(".chore");
       let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
+      
+      if (isChore) {
+        $(".ready-for-review").removeClass("warn", 700);       
+      }
       if (isChore && isReviewColumn) {
         $(this).sortable("cancel");  
         $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
@@ -300,6 +315,9 @@ function initializeDragAndDrop () {
         });
       }
       updatePivotal(ui);
+    },
+    sort: function(event,ui) {
+      
     }
   
   });
