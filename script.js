@@ -293,7 +293,7 @@ function initializeDragAndDrop () {
     beforeStop: function (event, ui) {
     
     },
-    items: ":not(.heading)",
+    items: ".card:not(.heading)",
     start: function(event, ui) {
       let isChore = $(ui.item[0]).is(".chore");
       if (isChore) {
