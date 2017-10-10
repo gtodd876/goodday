@@ -1,5 +1,6 @@
 let mykey = config.MY_API_KEY;
 let myProjectId = config.MY_PROJECT_ID;
+let wipCount = 0;
 
 let instance = axios.create({
   baseURL: "https://www.pivotaltracker.com/services/v5/projects/" + myProjectId + "/stories/",
@@ -15,17 +16,7 @@ instance
     let reviewStories = [];
     let inprogressStories = [];
     let doneStories = [];
-    let count = {
-      started: 0,
-      inProgress: 0
-    }
-    organizeStories(
-      allStories,
-      todoStories,
-      reviewStories,
-      inprogressStories,
-      doneStories
-    );
+    organizeStories(allStories, todoStories, reviewStories, inprogressStories, doneStories);
     displayStories(todoStories, reviewStories, inprogressStories, doneStories);
     initializeDragAndDrop();
     
@@ -52,6 +43,9 @@ instance
         allStories[i].current_state === "rejected" 
       ) {
         inprogressStories.push(allStories[i]);
+        wipCount += 1;
+        $(".in-progress > .heading > span").text(wipCount + "/3");
+        wipCheck(wipCount);
       }
       
       if (allStories[i].current_state === "finished") {
@@ -296,15 +290,21 @@ function initializeDragAndDrop () {
     items: ".card:not(.heading)",
     start: function(event, ui) {
       let isChore = $(ui.item[0]).is(".chore");
+      let isInProgress = $(ui.item).parents().is(".in-progress");
       if (isChore) {
         $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
         });
+      }
+      if (isInProgress) {
+        wipCount -= 1;
+        $(".in-progress > .heading > span").text(wipCount + "/3");
+        wipCheck(wipCount);
       }
     },
     stop: function(event, ui) {
       let isChore = $(ui.item[0]).is(".chore");
       let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
-      
+      let isInProgress = $(ui.item).parents().is(".in-progress");
       if (isChore) {
         $(".ready-for-review").removeClass("warn", 700);       
       }
@@ -313,6 +313,11 @@ function initializeDragAndDrop () {
         $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
           $(".ready-for-review").removeClass("warn", 700);
         });
+      }
+      if (isInProgress) {
+        wipCount += 1;
+        $(".in-progress > .heading > span").text(wipCount + "/3");
+        wipCheck(wipCount);
       }
       updatePivotal(ui);
     },
@@ -363,4 +368,15 @@ function updatePivotal(ui) {
       }
 
 } // end of updatePivotal
+
+function wipCheck(wipCount) {
+  if (wipCount > 3) {
+    $(".in-progress > .heading").addClass("warn-heading");
+  } else {
+    $(".in-progress > .heading").removeClass("warn-heading");    
+  }
+}
+
+
+
 
