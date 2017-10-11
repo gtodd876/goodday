@@ -306,12 +306,12 @@ function initializeDragAndDrop () {
       let isReviewColumn =  $(ui.item).parents().is(".ready-for-review");
       let isInProgress = $(ui.item).parents().is(".in-progress");
       if (isChore) {
-        $(".ready-for-review").removeClass("warn", 700);       
+        $(".ready-for-review").removeClass("warn");       
       }
       if (isChore && isReviewColumn) {
         $(this).sortable("cancel");  
         $(".ready-for-review").toggleClass("warn", 700, "easeOutSine", function() {
-          $(".ready-for-review").removeClass("warn", 700);
+          $(".ready-for-review").removeClass("warn");
         });
       }
       if (isInProgress) {
